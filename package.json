@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Strikersb/electron-demo#readme",
   "dependencies": {
-    "electron": "^2.0.0"
+    "electron": "^2.0.0",
+    "fluent-ffmpeg": "^2.1.2"
   }
 }

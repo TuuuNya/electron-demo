@@ -9,5 +9,28 @@
 </head>
 <body>
     <h1>Electron-Demo Tuuu</h1>
+    <form action="">
+        <div>
+            <label>Select a video</label>
+            <input type="file" accept="video/*">
+        </div>
+        <button type="submit">Get Info</button>
+        <h3 id="result"></h3>
+    </form>
+
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const { path } = document.querySelector('input').files[0];
+            ipcRenderer.send('video:submit', path);
+        })
+
+        ipcRenderer.on('video:metadata', (err, metadata) => {
+            document.querySelector('#result').innerHTML = `Video duration:${metadata}`;
+        })
+    </script>
+
 </body>
 </html>
