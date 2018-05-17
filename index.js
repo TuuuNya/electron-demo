@@ -1,16 +1,26 @@
+const path = require('path');
 const electron = require("electron");
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain, Tray } = electron;
 
 let mainWindow;
 let addWindow;
 
 app.on("ready", () => {
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        width: 500,
+        height: 300,
+        frame: false,
+        resizable: false,
+    });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.on('closed', () => app.quit());
 
     const mainMenu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(mainMenu);
+
+    const iconName = 't.png';
+    const iconPath = path.join(__dirname, `./images/${iconName}`);
+    new Tray(iconPath);
 });
 
 function createAddWindow() {
