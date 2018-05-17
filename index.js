@@ -8,7 +8,7 @@ let mainWindow;
 let addWindow;
 
 app.on("ready", () => {
-    app.dock.hide();
+    // app.dock.hide();
     mainWindow = new MainWindow(`file://${__dirname}/index.html`);
 
     const mainMenu = Menu.buildFromTemplate(menuTemplate);

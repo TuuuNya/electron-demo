@@ -6,17 +6,9 @@ class MainWindow extends BrowserWindow {
         super({
             width: 500,
             height: 300,
-            frame: false,
-            resizable: false,
-            show: false,
         });
 
         this.loadURL(url);
-        this.on('blur', this.onBlur.bind(this))
-    }
-
-    onBlur() {
-        this.hide();
     }
 }
 
