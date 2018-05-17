@@ -1,10 +1,10 @@
 const path = require('path');
 const electron = require("electron");
 const { app, BrowserWindow, Menu, ipcMain, Tray } = electron;
+const MacTray = require('./app/mac_tray');
 
 let mainWindow;
 let addWindow;
-let tray;
 
 app.on("ready", () => {
     mainWindow = new BrowserWindow({
@@ -22,24 +22,7 @@ app.on("ready", () => {
 
     const iconName = 't.png';
     const iconPath = path.join(__dirname, `./images/${iconName}`);
-    tray = new Tray(iconPath);
-    tray.on('click', (event, bounds) => {
-        const {x, y} = bounds;
-
-        const { height, width } = mainWindow.getBounds();
-
-        if (mainWindow.isVisible()) {
-            mainWindow.hide();
-        }else{
-            mainWindow.setBounds({
-                x: x - width / 2,
-                y,
-                height,
-                width,
-            });
-            mainWindow.show();
-        }
-    });
+    new MacTray(iconPath, mainWindow);
 });
 
 function createAddWindow() {
