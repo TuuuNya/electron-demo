@@ -7,6 +7,7 @@ let mainWindow;
 let addWindow;
 
 app.on("ready", () => {
+    app.dock.hide();
     mainWindow = new BrowserWindow({
         width: 500,
         height: 300,
@@ -16,6 +17,9 @@ app.on("ready", () => {
     });
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.on('closed', () => app.quit());
+    mainWindow.on('blur', () => {
+        mainWindow.hide();
+    })
 
     const mainMenu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(mainMenu);
