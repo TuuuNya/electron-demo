@@ -5,32 +5,27 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Electron-Demo</title>
+    <title>My Todos</title>
 </head>
 <body>
-    <h1>Electron-Demo Tuuu</h1>
-    <form action="">
-        <div>
-            <label>Select a video</label>
-            <input type="file" accept="video/*">
-        </div>
-        <button type="submit">Get Info</button>
-        <h3 id="result"></h3>
-    </form>
-
+    <h1>My Todos</h1>
+    <ul></ul>
     <script>
         const electron = require('electron');
         const { ipcRenderer } = electron;
-        document.querySelector('form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const { path } = document.querySelector('input').files[0];
-            ipcRenderer.send('video:submit', path);
-        })
+        const list = document.querySelector('ul');
 
-        ipcRenderer.on('video:metadata', (err, metadata) => {
-            document.querySelector('#result').innerHTML = `Video duration:${metadata}`;
-        })
+        ipcRenderer.on('todo:add', (event, todo) => {
+            const li = document.createElement('li');
+            const text = document.createTextNode(todo);
+
+            li.appendChild(text);
+            list.appendChild(li);
+        });
+
+        ipcRenderer.on('todo:clear', event => {
+            list.innerHTML = '';
+        });
     </script>
-
 </body>
 </html>
