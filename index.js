@@ -2,24 +2,14 @@ const path = require('path');
 const electron = require("electron");
 const { app, BrowserWindow, Menu, ipcMain, Tray } = electron;
 const MacTray = require('./app/mac_tray');
+const MainWindow = require('./app/main_window');
 
 let mainWindow;
 let addWindow;
 
 app.on("ready", () => {
     app.dock.hide();
-    mainWindow = new BrowserWindow({
-        width: 500,
-        height: 300,
-        frame: false,
-        resizable: false,
-        show: false,
-    });
-    mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.on('closed', () => app.quit());
-    mainWindow.on('blur', () => {
-        mainWindow.hide();
-    })
+    mainWindow = new MainWindow(`file://${__dirname}/index.html`);
 
     const mainMenu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(mainMenu);
